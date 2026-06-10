@@ -1,222 +1,173 @@
-# Bộ câu hỏi phỏng vấn Android Junior (1-3 năm kinh nghiệm)
+# Android Junior Interview Guide (Phiên bản chi tiết)
 
-## Mục tiêu tuyển dụng
+## Câu 1: MVVM là gì?
 
-- Android Developer Junior
-- Có thể làm việc độc lập
-- Phù hợp môi trường khách hàng Nhật
-- Có tư duy ownership
-- Có tiềm năng hướng dẫn fresher trong tương lai
+### Đáp án mong đợi
 
-**Thời gian:** 60 phút
+MVVM là một kiến trúc giúp tách giao diện người dùng khỏi phần xử lý logic và dữ liệu.
+
+Bao gồm:
+
+### View
+
+Là Activity, Fragment hoặc Compose UI.
+
+Nhiệm vụ:
+
+* Hiển thị dữ liệu
+* Nhận thao tác từ người dùng
+
+Không nên chứa business logic.
 
 ---
 
-# PHẦN 1 - KINH NGHIỆM DỰ ÁN & OWNERSHIP (20 điểm)
+### ViewModel
 
-## Câu 1: Hãy giới thiệu dự án gần nhất của em
-
-### Kỳ vọng
-
-Ứng viên trình bày được:
-
-- Domain dự án
-- Team size
-- Vai trò
-- Công nghệ sử dụng
+Là nơi xử lý logic liên quan đến giao diện.
 
 Ví dụ:
 
-> Em tham gia dự án mạng xã hội khoảng 25 thành viên.
-> Em phụ trách chat, notification và video call.
-> Công nghệ: Kotlin, MVVM, Retrofit, Firebase, Twilio.
+* Gọi repository
+* Xử lý dữ liệu trước khi hiển thị
+* Quản lý state của màn hình
+
+ViewModel có thể tồn tại khi xoay màn hình nên dữ liệu không bị mất.
 
 ---
 
-### Câu hỏi đào sâu 1
+### Repository
 
-Feature nào em tự làm từ đầu đến cuối?
+Là tầng trung gian giữa ViewModel và Data Source.
 
-### Câu trả lời tốt
+Nhiệm vụ:
 
-Ứng viên mô tả được:
-
-- Requirement
-- Thiết kế giải pháp
-- API sử dụng
-- Test
-- Release
-
-### Dấu hiệu fail
-
-> Em chỉ fix bug.
+* Gọi API
+* Gọi Room Database
+* Quyết định lấy dữ liệu từ local hay remote
 
 ---
 
-### Câu hỏi đào sâu 2
+### Data Source
 
-Em estimate task như thế nào?
-
-### Câu trả lời tốt
-
-> Em chia task thành:
->
-> - UI
-> - API
-> - Business logic
-> - Test
->
-> Sau đó estimate từng phần.
-
-### Dấu hiệu fail
-
-> Leader estimate sẵn.
-
----
-
-### Câu hỏi đào sâu 3
-
-Bug khó nhất em từng xử lý là gì?
-
-### Kỳ vọng
-
-Ứng viên trình bày được:
-
-- Hiện tượng
-- Cách điều tra
-- Nguyên nhân gốc
-- Giải pháp
-- Bài học rút ra
-
-### Dấu hiệu fail
-
-Không xác định được root cause.
-
----
-
-# PHẦN 2 - KIẾN THỨC ANDROID CƠ BẢN (20 điểm)
-
-## Câu 2: MVVM là gì?
-
-### Câu trả lời mong đợi
-
-MVVM gồm:
-
-- View
-- ViewModel
-- Repository
-- Data Source
-
-Flow:
-
-```text
-UI
-↓
-ViewModel
-↓
-Repository
-↓
-API / Database
-```
-
----
-
-### Câu hỏi đào sâu 1
-
-Tại sao cần ViewModel?
-
-### Câu trả lời tốt
-
-- Tách UI và business logic
-- Giữ state khi xoay màn hình
-- Dễ test
-
----
-
-### Câu hỏi đào sâu 2
-
-ViewModel có nên gọi Retrofit trực tiếp không?
-
-### Câu trả lời tốt
-
-Không nên.
-
-```text
-ViewModel
-↓
-Repository
-↓
-API
-```
-
-Lý do:
-
-- Dễ test
-- Dễ maintain
-- Tách trách nhiệm rõ ràng
-
----
-
-### Câu hỏi đào sâu 3
-
-Nếu vừa có API vừa có Room thì xử lý thế nào?
-
-### Câu trả lời tốt
-
-Repository quyết định nguồn dữ liệu.
+Nguồn dữ liệu thực tế.
 
 Ví dụ:
 
-```text
-1. Load từ Room
-2. Gọi API
-3. Save vào Room
-4. UI observe Room
-```
+* REST API
+* Room Database
+* SharedPreferences
 
 ---
 
-### Câu hỏi đào sâu 4
+### Câu hỏi đào sâu
 
-Trong dự án của em có những Repository nào?
+#### Tại sao không gọi API trực tiếp trong Activity?
 
-### Câu trả lời tốt
+Đáp án:
+
+Nếu gọi API trong Activity:
+
+* Code khó bảo trì
+* Khó test
+* Activity chứa quá nhiều logic
 
 Ví dụ:
 
-- AuthRepository
-- UserRepository
-- ProductRepository
+```kotlin
+button.setOnClickListener {
+    api.getUser()
+}
+```
 
-Ứng viên phải trả lời theo dự án thực tế.
+Khi màn hình lớn lên:
 
----
+* API
+* Validation
+* Business logic
 
-## Câu 3: Coroutine là gì?
+đều nằm trong Activity.
 
-### Câu trả lời mong đợi
-
-Coroutine là giải pháp xử lý bất đồng bộ.
-
-Ưu điểm:
-
-- Không block UI
-- Nhẹ hơn Thread
-- Dễ đọc hơn callback
+Đây là anti-pattern.
 
 ---
 
-### Câu hỏi đào sâu 1
+#### Tại sao Repository lại cần thiết?
 
-launch và async khác nhau thế nào?
+Đáp án:
 
-### Câu trả lời tốt
+Giả sử hôm nay dữ liệu lấy từ API.
+
+Ngày mai yêu cầu:
+
+* Cache dữ liệu
+* Offline mode
+
+Nếu không có Repository:
+
+Toàn bộ ViewModel phải sửa.
+
+Nếu có Repository:
+
+Chỉ cần sửa Repository.
+
+ViewModel không cần biết dữ liệu đến từ đâu.
+
+---
+
+## Câu 2: Coroutine là gì?
+
+### Đáp án mong đợi
+
+Coroutine là cơ chế xử lý bất đồng bộ của Kotlin.
+
+Mục đích:
+
+* Tránh block UI Thread
+* Thực hiện tác vụ dài như API hoặc Database
+
+Ví dụ:
+
+```kotlin
+viewModelScope.launch {
+    val users = repository.getUsers()
+}
+```
+
+Trong lúc API chạy:
+
+* UI vẫn hoạt động
+* Người dùng vẫn bấm được
+
+---
+
+### Tại sao không dùng Thread?
+
+Đáp án:
+
+Thread:
+
+* Tốn bộ nhớ
+* Quản lý khó
+* Dễ leak
+
+Coroutine:
+
+* Nhẹ hơn
+* Dễ đọc
+* Dễ cancel
+
+---
+
+### launch và async khác nhau thế nào?
 
 launch:
 
 ```kotlin
-viewModelScope.launch {}
+viewModelScope.launch {
+}
 ```
+
+Dùng khi không cần trả về kết quả.
 
 Trả về:
 
@@ -224,11 +175,16 @@ Trả về:
 Job
 ```
 
+---
+
 async:
 
 ```kotlin
-viewModelScope.async {}
+viewModelScope.async {
+}
 ```
+
+Dùng khi cần nhận kết quả.
 
 Trả về:
 
@@ -236,576 +192,269 @@ Trả về:
 Deferred<T>
 ```
 
+Ví dụ:
+
+```kotlin
+val user = async {
+    api.getUser()
+}
+
+val result = user.await()
+```
+
 ---
 
-### Câu hỏi đào sâu 2
+### Khi nào dùng async?
 
-Khi nào dùng async?
+Ví dụ:
 
-### Câu trả lời tốt
+Màn hình Home cần:
 
-Khi cần return dữ liệu.
+* User Info
+* Notification
+* Banner
+
+Có thể gọi song song:
+
+```kotlin
+val user = async { getUser() }
+val banner = async { getBanner() }
+val notify = async { getNotify() }
+```
+
+Giúp giảm thời gian chờ.
+
+---
+
+## Câu 3: StateFlow là gì?
+
+### Đáp án mong đợi
+
+StateFlow là nơi lưu trữ trạng thái hiện tại của màn hình.
 
 Ví dụ:
 
 ```kotlin
-val user = async { api.getUser() }
-val products = async { api.getProducts() }
-
-await()
+data class HomeUiState(
+    val loading: Boolean = false,
+    val users: List<User> = emptyList()
+)
 ```
-
----
-
-### Câu hỏi đào sâu 3
-
-viewModelScope là gì?
-
-### Câu trả lời tốt
-
-Coroutine scope gắn với ViewModel.
-
-Khi ViewModel bị clear:
-
-```text
-Coroutine tự cancel
-```
-
----
-
-### Câu hỏi đào sâu 4
-
-viewModelScope và lifecycleScope khác nhau thế nào?
-
-### Câu trả lời tốt
-
-viewModelScope
-
-- Sống theo ViewModel
-
-lifecycleScope
-
-- Sống theo Activity hoặc Fragment
-
----
-
-## Câu 4: StateFlow là gì?
-
-### Câu trả lời mong đợi
-
-StateFlow là nơi lưu trữ state hiện tại.
-
-Ví dụ:
 
 ```kotlin
 private val _state =
-    MutableStateFlow(UiState())
+    MutableStateFlow(HomeUiState())
 ```
 
----
+UI sẽ observe StateFlow.
 
-### Câu hỏi đào sâu 1
+Khi state thay đổi:
 
-Tại sao StateFlow phải có initial value?
-
-### Câu trả lời tốt
-
-Vì StateFlow luôn có state hiện tại.
+UI tự động cập nhật.
 
 ---
 
-### Câu hỏi đào sâu 2
+### Tại sao StateFlow phải có giá trị khởi tạo?
 
-StateFlow và SharedFlow khác nhau thế nào?
+Đáp án:
 
-### Câu trả lời tốt
+Vì StateFlow luôn đại diện cho trạng thái hiện tại.
 
-StateFlow
+Nó không bao giờ được phép rỗng.
 
-- Có giá trị hiện tại
-- Bắt buộc initial value
+Ví dụ:
 
-SharedFlow
-
-- Dùng cho event
-- Không bắt buộc initial value
-
----
-
-### Câu hỏi đào sâu 3
-
-Snackbar nên dùng gì?
-
-### Câu trả lời tốt
-
-SharedFlow
-
-Vì Snackbar là event.
-
----
-
-### Câu hỏi đào sâu 4
-
-Loading nên dùng gì?
-
-### Câu trả lời tốt
-
-StateFlow
-
-Vì Loading là state.
-
----
-
-### Câu hỏi đào sâu 5
-
-StateFlow khác LiveData thế nào?
-
-### Câu trả lời tốt
-
-StateFlow
-
-- Kotlin native
-- Hỗ trợ Compose tốt hơn
-
-LiveData
-
-- Lifecycle aware
-- Android specific
-
----
-
-# PHẦN 3 - THỰC CHIẾN ANDROID (20 điểm)
-
-## Câu 5: Thiết kế màn hình Product List
-
-API:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Iphone",
-    "price": 1000
-  }
-]
+```kotlin
+MutableStateFlow(HomeUiState())
 ```
 
+Luôn có state đầu tiên.
+
 ---
 
-### Kỳ vọng
+### StateFlow và SharedFlow khác nhau thế nào?
+
+StateFlow:
+
+Dùng cho state.
+
+Ví dụ:
+
+* Loading
+* User Info
+* Product List
+
+---
+
+SharedFlow:
+
+Dùng cho event.
+
+Ví dụ:
+
+* Toast
+* Snackbar
+* Navigate
+
+---
+
+### Tại sao Snackbar không nên dùng StateFlow?
+
+Ví dụ:
+
+```kotlin
+state.message = "Login Success"
+```
+
+Khi xoay màn hình:
+
+State vẫn tồn tại.
+
+Snackbar có thể hiện lại lần nữa.
+
+Đây là bug.
+
+Snackbar là event.
+
+Nên dùng SharedFlow.
+
+---
+
+## Câu 4: Crash trên Production
+
+### Khách hàng báo app crash.
+
+Em làm gì?
+
+### Đáp án mong đợi
+
+Bước 1:
+
+Xem Crashlytics.
+
+Thu thập:
+
+* Device
+* Android Version
+* Stacktrace
+* App Version
+
+---
+
+Bước 2:
+
+Đọc Stacktrace.
+
+Ví dụ:
 
 ```text
-data/
-domain/
-presentation/
+NullPointerException
+User.name
 ```
 
-Hoặc Clean Architecture.
+=> Có thể User bị null.
 
 ---
 
-### Câu hỏi đào sâu 1
+Bước 3:
 
-Model đặt ở đâu?
+Reproduce.
 
-### Câu trả lời tốt
+Tìm cách tái hiện bug.
 
-- domain/model
-hoặc
-- data/model
+Ví dụ:
 
-Tuỳ kiến trúc.
-
----
-
-### Câu hỏi đào sâu 2
-
-Loading xử lý thế nào?
-
-### Câu trả lời tốt
-
-```kotlin
-sealed class UiState {
-    object Loading
-    data class Success(...)
-    data class Error(...)
-}
-```
+* Android 14
+* Login bằng tài khoản mới
 
 ---
 
-### Câu hỏi đào sâu 3
+Bước 4:
 
-Error xử lý thế nào?
-
-### Câu trả lời tốt
-
-- Hiển thị message
-- Retry
-- Log lỗi nếu cần
+Fix.
 
 ---
 
-### Câu hỏi đào sâu 4
+Bước 5:
 
-Pull To Refresh làm thế nào?
+Regression Test.
 
-### Câu trả lời tốt
-
-- Gọi lại API
-- Update state
-- Hiển thị loading
+Kiểm tra các màn hình liên quan.
 
 ---
 
-## Câu 6: Production bị crash
+### Nếu không reproduce được?
 
-Khách hàng báo app crash.
+Đáp án:
 
-Em xử lý thế nào?
+* Thêm log
+* Review code
+* So sánh các device bị crash
+* Theo dõi Crashlytics tiếp
 
-### Câu trả lời tốt
-
-```text
-1. Xem Crashlytics
-2. Đọc Stacktrace
-3. Reproduce
-4. Fix
-5. Regression Test
-```
+Không được fix đoán mò.
 
 ---
 
-### Câu hỏi đào sâu 1
+## Câu 5: Estimate bị trễ
 
-Thông tin nào quan trọng?
+Estimate:
 
-### Câu trả lời tốt
-
-- Device
-- Android version
-- App version
-- Stacktrace
-
----
-
-### Câu hỏi đào sâu 2
-
-Không reproduce được thì sao?
-
-### Câu trả lời tốt
-
-- Thêm log
-- Kiểm tra code path
-- Phân tích Crashlytics
-
----
-
-### Câu hỏi đào sâu 3
-
-Crashlytics là gì?
-
-### Câu trả lời tốt
-
-Công cụ theo dõi crash của Firebase.
-
-Cung cấp:
-
-- Stacktrace
-- Device info
-- Tần suất crash
-
----
-
-## Câu 7: App bị lag
-
-App lag khi scroll 500 item.
-
-Em kiểm tra gì?
-
-### Câu trả lời tốt
-
-- RecyclerView
-- Image loading
-- Main Thread
-- Memory
-
----
-
-### Câu hỏi đào sâu 1
-
-DiffUtil là gì?
-
-### Câu trả lời tốt
-
-Tính toán sự khác biệt của list.
-
-Tránh notifyDataSetChanged toàn bộ.
-
----
-
-### Câu hỏi đào sâu 2
-
-Paging là gì?
-
-### Câu trả lời tốt
-
-Load dữ liệu từng phần.
-
-Không load toàn bộ cùng lúc.
-
----
-
-### Câu hỏi đào sâu 3
-
-Kiểm tra Main Thread block thế nào?
-
-### Câu trả lời tốt
-
-- Android Profiler
-- StrictMode
-- Log
-
----
-
-# PHẦN 4 - LIVE CODING (15 điểm)
-
-## Câu 8
-
-Cho:
-
-```kotlin
-data class User(
-    val id: Int,
-    val name: String,
-    val age: Int
-)
-```
-
-```kotlin
-val users = listOf(
-    User(1, "A", 18),
-    User(2, "B", 22),
-    User(3, "C", 25),
-    User(4, "D", 17)
-)
-```
-
----
-
-### Yêu cầu 1
-
-Lấy danh sách user >= 18 tuổi
-
-### Đáp án
-
-```kotlin
-val result =
-    users.filter {
-        it.age >= 18
-    }
-```
-
----
-
-### Yêu cầu 2
-
-Sort giảm dần theo tuổi
-
-### Đáp án
-
-```kotlin
-val result =
-    users.sortedByDescending {
-        it.age
-    }
-```
-
----
-
-### Yêu cầu 3
-
-Trả về danh sách tên
-
-### Đáp án
-
-```kotlin
-val names =
-    users.map {
-        it.name
-    }
-```
-
----
-
-### Câu hỏi đào sâu 1
-
-filter và map khác nhau thế nào?
-
-### Câu trả lời tốt
-
-filter
-
-- Lọc dữ liệu
-
-map
-
-- Chuyển đổi dữ liệu
-
----
-
-### Câu hỏi đào sâu 2
-
-map và forEach khác nhau thế nào?
-
-### Câu trả lời tốt
-
-map
-
-- Trả về list mới
-
-forEach
-
-- Chỉ duyệt
-
----
-
-# PHẦN 5 - MINDSET & KHÁCH HÀNG NHẬT (25 điểm)
-
-## Câu 9
-
-Estimate 2 ngày.
+2 ngày
 
 Ngày thứ 2 vẫn chưa xong.
 
 Em làm gì?
 
-### PASS
+### Đáp án mong đợi
 
-- Báo leader sớm
-- Nêu rõ blocker
-- Đề xuất estimate mới
+Không được im lặng.
 
-### FAIL
+Cần:
 
-> Em cố làm thêm vài ngày rồi báo.
+1. Báo leader ngay
 
----
+2. Nêu phần đã hoàn thành
 
-### Câu hỏi đào sâu
+Ví dụ:
 
-Khi nào nên báo risk?
+```text
+UI: 100%
+API: 80%
+Testing: chưa làm
+```
 
-### Câu trả lời tốt
+3. Giải thích nguyên nhân
 
-Ngay khi phát hiện risk.
+Ví dụ:
 
-Không đợi tới deadline.
+```text
+API thay đổi
+Requirement chưa rõ
+```
 
----
+4. Đề xuất estimate mới
 
-## Câu 10
+Ví dụ:
 
-Nhận task nhưng không hiểu requirement.
-
-Em làm gì?
-
-### PASS
-
-1. Đọc tài liệu
-2. Tìm hiểu code cũ
-3. Tự điều tra
-4. Tổng hợp câu hỏi
-5. Hỏi BA hoặc Leader
-
-### FAIL
-
-> Code trước rồi sửa sau.
+```text
+Cần thêm 1 ngày
+```
 
 ---
 
-## Câu 11
+### Tại sao đây là đáp án đúng?
 
-Fresher hỏi em một bug mà em không biết.
+Trong môi trường Nhật:
 
-Em xử lý sao?
+Điều quan trọng nhất không phải là trễ.
 
-### PASS
+Điều quan trọng nhất là:
 
-- Cùng phân tích
-- Hướng dẫn debug
-- Escalate nếu cần
+* Minh bạch
+* Báo sớm
+* Chủ động
 
-### FAIL
+Nếu đợi tới deadline mới báo:
 
-> Em sửa hộ luôn.
-
----
-
-### Câu hỏi đào sâu
-
-Em mentor fresher như thế nào?
-
-### Câu trả lời tốt
-
-- Dạy cách tư duy
-- Dạy cách debug
-- Không đưa đáp án ngay
-
----
-
-## Câu 12
-
-Leader nghỉ phép.
-
-Production bug xuất hiện.
-
-Em làm gì?
-
-### PASS
-
-1. Thu thập thông tin
-2. Đánh giá ảnh hưởng
-3. Báo team
-4. Đề xuất hướng xử lý
-5. Theo dõi tới khi fix xong
-
----
-
-### Câu hỏi đào sâu
-
-Khách hàng hỏi tiến độ xử lý bug.
-
-Em trả lời sao?
-
-### Câu trả lời tốt
-
-> Đã xác định phạm vi ảnh hưởng.
->
-> Đang điều tra nguyên nhân.
->
-> Sẽ cập nhật tiến độ tiếp theo sau X giờ.
-
-### FAIL
-
-> Đang kiểm tra.
-
----
-
-# THANG ĐIỂM
-
-| Mục | Điểm |
-|------|------:|
-| Kinh nghiệm dự án | 20 |
-| Android Foundation | 20 |
-| Android Practical | 20 |
-| Live Coding | 15 |
-| Mindset & Communication | 25 |
-| Tổng | 100 |
-
-# ĐÁNH GIÁ
-
-- 85+ : Strong Hire
-- 75-84 : Hire
-- 65-74 : Consider
-- <65 : Reject
+Đó là dấu hiệu quản lý công việc kém.
