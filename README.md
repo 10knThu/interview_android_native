@@ -1,96 +1,106 @@
-# Android Junior Interview (1-3 Years Experience)
+# Bộ câu hỏi phỏng vấn Android Junior (1-3 năm kinh nghiệm)
 
-**Target**
-- Junior Android Developer
-- Can work independently
-- Suitable for Japanese projects
-- Has ownership mindset
-- Potential to mentor fresher in the future
+## Mục tiêu tuyển dụng
 
-**Duration:** 60 minutes
+- Android Developer Junior
+- Có thể làm việc độc lập
+- Phù hợp môi trường khách hàng Nhật
+- Có tư duy ownership
+- Có tiềm năng hướng dẫn fresher trong tương lai
+
+**Thời gian:** 60 phút
 
 ---
 
-# PART 1 - PROJECT EXPERIENCE & OWNERSHIP (20 points)
+# PHẦN 1 - KINH NGHIỆM DỰ ÁN & OWNERSHIP (20 điểm)
 
-## Question 1: Introduce your most recent project
+## Câu 1: Hãy giới thiệu dự án gần nhất của em
 
-### Expected Answer
+### Kỳ vọng
 
-- Project domain
+Ứng viên trình bày được:
+
+- Domain dự án
 - Team size
-- Responsibilities
-- Technologies used
+- Vai trò
+- Công nghệ sử dụng
 
-Example:
+Ví dụ:
 
-> I worked on a social networking application with about 25 members.
-> My responsibility was implementing chat, notification and video call features.
-> Technologies: Kotlin, MVVM, Retrofit, Firebase, Twilio.
+> Em tham gia dự án mạng xã hội khoảng 25 thành viên.
+> Em phụ trách chat, notification và video call.
+> Công nghệ: Kotlin, MVVM, Retrofit, Firebase, Twilio.
 
 ---
 
-### Sub Question 1
+### Câu hỏi đào sâu 1
 
-What feature did you develop from start to finish?
+Feature nào em tự làm từ đầu đến cuối?
 
-### Good Answer
+### Câu trả lời tốt
 
-Candidate can clearly explain:
+Ứng viên mô tả được:
 
 - Requirement
-- Design approach
-- API integration
-- Testing process
-- Release process
+- Thiết kế giải pháp
+- API sử dụng
+- Test
+- Release
 
-### Red Flag
+### Dấu hiệu fail
 
-> I only fixed bugs.
+> Em chỉ fix bug.
 
 ---
 
-### Sub Question 2
+### Câu hỏi đào sâu 2
 
-How did you estimate your tasks?
+Em estimate task như thế nào?
 
-### Good Answer
+### Câu trả lời tốt
 
-> I break down tasks into UI, API integration, business logic and testing.
+> Em chia task thành:
 >
-> Then estimate each part separately.
+> - UI
+> - API
+> - Business logic
+> - Test
+>
+> Sau đó estimate từng phần.
 
-### Red Flag
+### Dấu hiệu fail
 
-> Leader estimated for me.
-
----
-
-### Sub Question 3
-
-Tell me about the most difficult bug you solved.
-
-### Good Answer Structure
-
-- What happened?
-- How did you investigate?
-- Root cause?
-- Final solution?
-- Lessons learned?
-
-### Red Flag
-
-Cannot explain root cause.
+> Leader estimate sẵn.
 
 ---
 
-# PART 2 - ANDROID FUNDAMENTALS (20 points)
+### Câu hỏi đào sâu 3
 
-## Question 2: Explain MVVM
+Bug khó nhất em từng xử lý là gì?
 
-### Expected Answer
+### Kỳ vọng
 
-MVVM consists of:
+Ứng viên trình bày được:
+
+- Hiện tượng
+- Cách điều tra
+- Nguyên nhân gốc
+- Giải pháp
+- Bài học rút ra
+
+### Dấu hiệu fail
+
+Không xác định được root cause.
+
+---
+
+# PHẦN 2 - KIẾN THỨC ANDROID CƠ BẢN (20 điểm)
+
+## Câu 2: MVVM là gì?
+
+### Câu trả lời mong đợi
+
+MVVM gồm:
 
 - View
 - ViewModel
@@ -99,101 +109,108 @@ MVVM consists of:
 
 Flow:
 
+```text
 UI
 ↓
 ViewModel
 ↓
 Repository
 ↓
-API / Local DB
+API / Database
+```
 
 ---
 
-### Sub Question 1
+### Câu hỏi đào sâu 1
 
-Why do we need ViewModel?
+Tại sao cần ViewModel?
 
-### Expected Answer
+### Câu trả lời tốt
 
-- Separate UI from business logic
-- Survive configuration changes
-- Easier testing
+- Tách UI và business logic
+- Giữ state khi xoay màn hình
+- Dễ test
 
 ---
 
-### Sub Question 2
+### Câu hỏi đào sâu 2
 
-Can ViewModel call Retrofit directly?
+ViewModel có nên gọi Retrofit trực tiếp không?
 
-### Expected Answer
+### Câu trả lời tốt
 
-No.
+Không nên.
 
-Recommended:
-
+```text
 ViewModel
-→ Repository
-→ API
+↓
+Repository
+↓
+API
+```
 
-Reason:
+Lý do:
 
-- Easier testing
-- Better separation of concerns
-
----
-
-### Sub Question 3
-
-What if data comes from both API and Room?
-
-### Expected Answer
-
-Repository decides data source.
-
-Example:
-
-- Load Room first
-- Then fetch API
-- Save API response into Room
-- UI observes Room
+- Dễ test
+- Dễ maintain
+- Tách trách nhiệm rõ ràng
 
 ---
 
-### Sub Question 4
+### Câu hỏi đào sâu 3
 
-What repositories exist in your current project?
+Nếu vừa có API vừa có Room thì xử lý thế nào?
 
-### Expected Answer
+### Câu trả lời tốt
 
-Real examples:
+Repository quyết định nguồn dữ liệu.
+
+Ví dụ:
+
+```text
+1. Load từ Room
+2. Gọi API
+3. Save vào Room
+4. UI observe Room
+```
+
+---
+
+### Câu hỏi đào sâu 4
+
+Trong dự án của em có những Repository nào?
+
+### Câu trả lời tốt
+
+Ví dụ:
 
 - AuthRepository
 - UserRepository
 - ProductRepository
 
-Candidate should answer based on real project.
+Ứng viên phải trả lời theo dự án thực tế.
 
 ---
 
-# Question 3: Explain Coroutine
+## Câu 3: Coroutine là gì?
 
-### Expected Answer
+### Câu trả lời mong đợi
 
-Coroutine is a lightweight asynchronous programming solution.
+Coroutine là giải pháp xử lý bất đồng bộ.
 
-Benefits:
+Ưu điểm:
 
-- Non-blocking
-- Easier than callbacks
-- More lightweight than Thread
+- Không block UI
+- Nhẹ hơn Thread
+- Dễ đọc hơn callback
 
 ---
 
-### Sub Question 1
+### Câu hỏi đào sâu 1
 
-Difference between launch and async?
+launch và async khác nhau thế nào?
 
-### Expected Answer
+### Câu trả lời tốt
 
 launch:
 
@@ -201,7 +218,7 @@ launch:
 viewModelScope.launch {}
 ```
 
-Returns:
+Trả về:
 
 ```kotlin
 Job
@@ -213,25 +230,23 @@ async:
 viewModelScope.async {}
 ```
 
-Returns:
+Trả về:
 
 ```kotlin
 Deferred<T>
 ```
 
-Used when a value needs to be returned.
-
 ---
 
-### Sub Question 2
+### Câu hỏi đào sâu 2
 
-When should we use async?
+Khi nào dùng async?
 
-### Expected Answer
+### Câu trả lời tốt
 
-When we need parallel tasks that return values.
+Khi cần return dữ liệu.
 
-Example:
+Ví dụ:
 
 ```kotlin
 val user = async { api.getUser() }
@@ -242,43 +257,45 @@ await()
 
 ---
 
-### Sub Question 3
+### Câu hỏi đào sâu 3
 
-What is viewModelScope?
+viewModelScope là gì?
 
-### Expected Answer
+### Câu trả lời tốt
 
-Coroutine scope tied to ViewModel lifecycle.
+Coroutine scope gắn với ViewModel.
 
-When ViewModel is destroyed:
+Khi ViewModel bị clear:
 
-- Coroutine gets cancelled automatically.
+```text
+Coroutine tự cancel
+```
 
 ---
 
-### Sub Question 4
+### Câu hỏi đào sâu 4
 
-Difference between lifecycleScope and viewModelScope?
+viewModelScope và lifecycleScope khác nhau thế nào?
 
-### Expected Answer
+### Câu trả lời tốt
 
 viewModelScope
 
-- Lives as long as ViewModel
+- Sống theo ViewModel
 
 lifecycleScope
 
-- Lives as long as Activity/Fragment
+- Sống theo Activity hoặc Fragment
 
 ---
 
-# Question 4: Explain StateFlow
+## Câu 4: StateFlow là gì?
 
-### Expected Answer
+### Câu trả lời mong đợi
 
-StateFlow is a state holder.
+StateFlow là nơi lưu trữ state hiện tại.
 
-Example:
+Ví dụ:
 
 ```kotlin
 private val _state =
@@ -287,83 +304,79 @@ private val _state =
 
 ---
 
-### Sub Question 1
+### Câu hỏi đào sâu 1
 
-Why must StateFlow have an initial value?
+Tại sao StateFlow phải có initial value?
 
-### Expected Answer
+### Câu trả lời tốt
 
-StateFlow always contains a current state.
+Vì StateFlow luôn có state hiện tại.
 
 ---
 
-### Sub Question 2
+### Câu hỏi đào sâu 2
 
-Difference between StateFlow and SharedFlow?
+StateFlow và SharedFlow khác nhau thế nào?
 
-### Expected Answer
+### Câu trả lời tốt
 
 StateFlow
 
-- Has current value
-- Requires initial value
+- Có giá trị hiện tại
+- Bắt buộc initial value
 
 SharedFlow
 
-- Event stream
-- No required initial value
+- Dùng cho event
+- Không bắt buộc initial value
 
 ---
 
-### Sub Question 3
+### Câu hỏi đào sâu 3
 
-Should Snackbar use StateFlow or SharedFlow?
+Snackbar nên dùng gì?
 
-### Expected Answer
+### Câu trả lời tốt
 
 SharedFlow
 
-Reason:
-
-Snackbar is an event.
+Vì Snackbar là event.
 
 ---
 
-### Sub Question 4
+### Câu hỏi đào sâu 4
 
-Should Loading State use StateFlow or SharedFlow?
+Loading nên dùng gì?
 
-### Expected Answer
+### Câu trả lời tốt
 
 StateFlow
 
-Reason:
-
-Loading is UI state.
+Vì Loading là state.
 
 ---
 
-### Sub Question 5
+### Câu hỏi đào sâu 5
 
-Difference between StateFlow and LiveData?
+StateFlow khác LiveData thế nào?
 
-### Expected Answer
+### Câu trả lời tốt
 
 StateFlow
 
 - Kotlin native
-- Better Compose support
+- Hỗ trợ Compose tốt hơn
 
 LiveData
 
 - Lifecycle aware
-- Android-specific
+- Android specific
 
 ---
 
-# PART 3 - ANDROID PRACTICAL (20 points)
+# PHẦN 3 - THỰC CHIẾN ANDROID (20 điểm)
 
-## Question 5: Design a Product List screen
+## Câu 5: Thiết kế màn hình Product List
 
 API:
 
@@ -379,7 +392,7 @@ API:
 
 ---
 
-### Expected Architecture
+### Kỳ vọng
 
 ```text
 data/
@@ -387,31 +400,29 @@ domain/
 presentation/
 ```
 
-or Clean Architecture.
+Hoặc Clean Architecture.
 
 ---
 
-### Sub Question 1
+### Câu hỏi đào sâu 1
 
-Where should Model be placed?
+Model đặt ở đâu?
 
-### Expected Answer
+### Câu trả lời tốt
 
-domain/model
+- domain/model
+hoặc
+- data/model
 
-or
-
-data/model
-
-depending on architecture.
+Tuỳ kiến trúc.
 
 ---
 
-### Sub Question 2
+### Câu hỏi đào sâu 2
 
-How do you handle Loading?
+Loading xử lý thế nào?
 
-### Expected Answer
+### Câu trả lời tốt
 
 ```kotlin
 sealed class UiState {
@@ -423,144 +434,145 @@ sealed class UiState {
 
 ---
 
-### Sub Question 3
+### Câu hỏi đào sâu 3
 
-How do you handle Error?
+Error xử lý thế nào?
 
-### Expected Answer
+### Câu trả lời tốt
 
-- Show error message
-- Retry button
-- Log crash if needed
+- Hiển thị message
+- Retry
+- Log lỗi nếu cần
 
 ---
 
-### Sub Question 4
+### Câu hỏi đào sâu 4
 
-How do you implement Pull To Refresh?
+Pull To Refresh làm thế nào?
 
-### Expected Answer
+### Câu trả lời tốt
 
-- Trigger API again
+- Gọi lại API
 - Update state
-- Show loading indicator
+- Hiển thị loading
 
 ---
 
-# Question 6: Production Crash
+## Câu 6: Production bị crash
 
-Customer reports app crash.
+Khách hàng báo app crash.
 
-How do you investigate?
+Em xử lý thế nào?
 
----
+### Câu trả lời tốt
 
-### Expected Answer
-
-1. Check Crashlytics
-2. Analyze stacktrace
-3. Reproduce issue
+```text
+1. Xem Crashlytics
+2. Đọc Stacktrace
+3. Reproduce
 4. Fix
-5. Regression test
+5. Regression Test
+```
 
 ---
 
-### Sub Question 1
+### Câu hỏi đào sâu 1
 
-What information is important?
+Thông tin nào quan trọng?
 
-### Expected Answer
+### Câu trả lời tốt
 
 - Device
 - Android version
-- Stacktrace
 - App version
+- Stacktrace
 
 ---
 
-### Sub Question 2
+### Câu hỏi đào sâu 2
 
-What if crash cannot be reproduced?
+Không reproduce được thì sao?
 
-### Expected Answer
+### Câu trả lời tốt
 
-- Add logs
-- Review code path
-- Analyze Crashlytics trends
+- Thêm log
+- Kiểm tra code path
+- Phân tích Crashlytics
 
 ---
 
-### Sub Question 3
+### Câu hỏi đào sâu 3
 
-What is Crashlytics?
+Crashlytics là gì?
 
-### Expected Answer
+### Câu trả lời tốt
 
-Firebase crash reporting tool.
+Công cụ theo dõi crash của Firebase.
 
-Provides:
+Cung cấp:
 
 - Stacktrace
 - Device info
-- Crash frequency
+- Tần suất crash
 
 ---
 
-# Question 7: App Lag
+## Câu 7: App bị lag
 
-App becomes slow when scrolling 500 items.
+App lag khi scroll 500 item.
 
-What would you check?
+Em kiểm tra gì?
 
----
+### Câu trả lời tốt
 
-### Expected Answer
-
-- RecyclerView optimization
+- RecyclerView
 - Image loading
-- Heavy operations on Main Thread
+- Main Thread
+- Memory
 
 ---
 
-### Sub Question 1
+### Câu hỏi đào sâu 1
 
-What is DiffUtil?
+DiffUtil là gì?
 
-### Expected Answer
+### Câu trả lời tốt
 
-Calculates list differences efficiently.
+Tính toán sự khác biệt của list.
 
-Avoids full refresh.
-
----
-
-### Sub Question 2
-
-What is Paging?
-
-### Expected Answer
-
-Loads data in chunks instead of loading everything.
+Tránh notifyDataSetChanged toàn bộ.
 
 ---
 
-### Sub Question 3
+### Câu hỏi đào sâu 2
 
-How do you check Main Thread blocking?
+Paging là gì?
 
-### Expected Answer
+### Câu trả lời tốt
+
+Load dữ liệu từng phần.
+
+Không load toàn bộ cùng lúc.
+
+---
+
+### Câu hỏi đào sâu 3
+
+Kiểm tra Main Thread block thế nào?
+
+### Câu trả lời tốt
 
 - Android Profiler
-- Logs
 - StrictMode
+- Log
 
 ---
 
-# PART 4 - LIVE CODING (15 points)
+# PHẦN 4 - LIVE CODING (15 điểm)
 
-## Question 8
+## Câu 8
 
-Given:
+Cho:
 
 ```kotlin
 data class User(
@@ -581,11 +593,11 @@ val users = listOf(
 
 ---
 
-### Task 1
+### Yêu cầu 1
 
-Get users age >= 18
+Lấy danh sách user >= 18 tuổi
 
-### Answer
+### Đáp án
 
 ```kotlin
 val result =
@@ -596,11 +608,11 @@ val result =
 
 ---
 
-### Task 2
+### Yêu cầu 2
 
-Sort by age descending
+Sort giảm dần theo tuổi
 
-### Answer
+### Đáp án
 
 ```kotlin
 val result =
@@ -611,11 +623,11 @@ val result =
 
 ---
 
-### Task 3
+### Yêu cầu 3
 
-Return name list
+Trả về danh sách tên
 
-### Answer
+### Đáp án
 
 ```kotlin
 val names =
@@ -626,173 +638,174 @@ val names =
 
 ---
 
-### Sub Question 1
+### Câu hỏi đào sâu 1
 
-Difference between map and filter?
+filter và map khác nhau thế nào?
 
-### Expected Answer
+### Câu trả lời tốt
 
 filter
 
-- Select items
+- Lọc dữ liệu
 
 map
 
-- Transform items
+- Chuyển đổi dữ liệu
 
 ---
 
-### Sub Question 2
+### Câu hỏi đào sâu 2
 
-Difference between map and forEach?
+map và forEach khác nhau thế nào?
 
-### Expected Answer
+### Câu trả lời tốt
 
 map
 
-- Returns new collection
+- Trả về list mới
 
 forEach
 
-- Iterates only
+- Chỉ duyệt
 
 ---
 
-# PART 5 - MINDSET & JAPANESE PROJECTS (25 points)
+# PHẦN 5 - MINDSET & KHÁCH HÀNG NHẬT (25 điểm)
 
-## Question 9
+## Câu 9
 
-Estimated 2 days.
+Estimate 2 ngày.
 
-Day 2 arrives but task is still unfinished.
+Ngày thứ 2 vẫn chưa xong.
 
-What would you do?
+Em làm gì?
 
-### Good Answer
+### PASS
 
-- Inform leader early
-- Explain blockers
-- Propose new estimate
+- Báo leader sớm
+- Nêu rõ blocker
+- Đề xuất estimate mới
 
-### Bad Answer
+### FAIL
 
-> Continue silently for several more days.
-
----
-
-### Sub Question
-
-When should you report risk?
-
-### Expected Answer
-
-As soon as risk is identified.
-
-Not after deadline.
+> Em cố làm thêm vài ngày rồi báo.
 
 ---
 
-# Question 10
+### Câu hỏi đào sâu
 
-You receive a task but don't fully understand the requirement.
+Khi nào nên báo risk?
 
-What would you do?
+### Câu trả lời tốt
 
-### Good Answer
+Ngay khi phát hiện risk.
 
-1. Read documents
-2. Check existing implementation
-3. Investigate
-4. Prepare questions
-5. Discuss with BA/Leader
+Không đợi tới deadline.
 
 ---
 
-### Bad Answer
+## Câu 10
 
-> Start coding and fix later.
+Nhận task nhưng không hiểu requirement.
 
----
+Em làm gì?
 
-# Question 11
+### PASS
 
-A fresher asks for help with a bug you don't know.
+1. Đọc tài liệu
+2. Tìm hiểu code cũ
+3. Tự điều tra
+4. Tổng hợp câu hỏi
+5. Hỏi BA hoặc Leader
 
-What would you do?
+### FAIL
 
-### Good Answer
-
-- Help analyze
-- Guide debugging process
-- Escalate if needed
-
-### Bad Answer
-
-> Fix it for them without explanation.
+> Code trước rồi sửa sau.
 
 ---
 
-### Sub Question
+## Câu 11
 
-How do you mentor a fresher?
+Fresher hỏi em một bug mà em không biết.
 
-### Good Answer
+Em xử lý sao?
 
-- Explain thinking process
-- Teach debugging
-- Encourage independent investigation
+### PASS
 
----
+- Cùng phân tích
+- Hướng dẫn debug
+- Escalate nếu cần
 
-# Question 12
+### FAIL
 
-Production bug occurs while leader is on leave.
-
-What would you do?
-
-### Good Answer
-
-1. Gather information
-2. Evaluate impact
-3. Inform team
-4. Suggest solution
-5. Follow until resolved
+> Em sửa hộ luôn.
 
 ---
 
-### Sub Question
+### Câu hỏi đào sâu
 
-What if customer asks for progress update?
+Em mentor fresher như thế nào?
 
-### Good Answer
+### Câu trả lời tốt
 
-> Root cause is being investigated.
+- Dạy cách tư duy
+- Dạy cách debug
+- Không đưa đáp án ngay
+
+---
+
+## Câu 12
+
+Leader nghỉ phép.
+
+Production bug xuất hiện.
+
+Em làm gì?
+
+### PASS
+
+1. Thu thập thông tin
+2. Đánh giá ảnh hưởng
+3. Báo team
+4. Đề xuất hướng xử lý
+5. Theo dõi tới khi fix xong
+
+---
+
+### Câu hỏi đào sâu
+
+Khách hàng hỏi tiến độ xử lý bug.
+
+Em trả lời sao?
+
+### Câu trả lời tốt
+
+> Đã xác định phạm vi ảnh hưởng.
 >
-> Current impact affects feature X.
+> Đang điều tra nguyên nhân.
 >
-> Next update will be provided in Y hours.
+> Sẽ cập nhật tiến độ tiếp theo sau X giờ.
+
+### FAIL
+
+> Đang kiểm tra.
 
 ---
 
-# FINAL SCORE
+# THANG ĐIỂM
 
-| Section | Score |
-|----------|--------|
-| Project Experience | 20 |
-| Android Fundamentals | 20 |
+| Mục | Điểm |
+|------|------:|
+| Kinh nghiệm dự án | 20 |
+| Android Foundation | 20 |
 | Android Practical | 20 |
 | Live Coding | 15 |
 | Mindset & Communication | 25 |
-| Total | 100 |
+| Tổng | 100 |
 
----
+# ĐÁNH GIÁ
 
-# Hiring Recommendation
-
-85+ = Strong Hire
-
-75-84 = Hire
-
-65-74 = Consider
-
-<65 = Reject
+- 85+ : Strong Hire
+- 75-84 : Hire
+- 65-74 : Consider
+- <65 : Reject
