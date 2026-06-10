@@ -1,460 +1,227 @@
-# Android Junior Interview Guide (Phiên bản chi tiết)
+# Android Junior Interview Guide
 
-## Câu 1: MVVM là gì?
+## Opening (5-10 phút)
 
-### Đáp án mong đợi
+### Câu 0.1
 
-MVVM là một kiến trúc giúp tách giao diện người dùng khỏi phần xử lý logic và dữ liệu.
+Em hãy giới thiệu bản thân trong khoảng 2-3 phút.
 
-Bao gồm:
+### Kỳ vọng
 
-### View
+Ứng viên trình bày được:
 
-Là Activity, Fragment hoặc Compose UI.
-
-Nhiệm vụ:
-
-* Hiển thị dữ liệu
-* Nhận thao tác từ người dùng
-
-Không nên chứa business logic.
-
----
-
-### ViewModel
-
-Là nơi xử lý logic liên quan đến giao diện.
+* Học trường nào
+* Kinh nghiệm bao nhiêu năm
+* Dự án nổi bật
+* Công nghệ chính
+* Mục tiêu nghề nghiệp
 
 Ví dụ:
 
-* Gọi repository
-* Xử lý dữ liệu trước khi hiển thị
-* Quản lý state của màn hình
-
-ViewModel có thể tồn tại khi xoay màn hình nên dữ liệu không bị mất.
-
----
-
-### Repository
-
-Là tầng trung gian giữa ViewModel và Data Source.
-
-Nhiệm vụ:
-
-* Gọi API
-* Gọi Room Database
-* Quyết định lấy dữ liệu từ local hay remote
+> Em là Nguyễn Văn A.
+>
+> Em có khoảng 2 năm kinh nghiệm Android.
+>
+> Hiện tại đang làm dự án IoT sử dụng Kotlin, MVVM, MQTT và BLE.
+>
+> Em muốn phát triển theo hướng Android Developer chuyên sâu và trong tương lai có thể dẫn dắt các bạn fresher.
 
 ---
 
-### Data Source
+### Dấu hiệu tốt
 
-Nguồn dữ liệu thực tế.
+* Trình bày mạch lạc
+* Có trọng tâm
+* Tự tin
 
-Ví dụ:
+---
 
-* REST API
-* Room Database
-* SharedPreferences
+### Dấu hiệu chưa tốt
+
+* Nói lan man
+* Không nắm rõ vai trò bản thân
+* Không tóm tắt được kinh nghiệm
+
+---
+
+## Câu 0.2
+
+Trong tất cả các dự án đã làm, em tự tin nhất dự án nào?
+
+### Mục đích
+
+Tìm dự án để đào sâu.
+
+### Kỳ vọng
+
+Ứng viên chọn:
+
+* Dự án làm lâu nhất
+* Dự án đóng góp nhiều nhất
+* Dự án hiểu rõ nhất
 
 ---
 
 ### Câu hỏi đào sâu
 
-#### Tại sao không gọi API trực tiếp trong Activity?
+Tại sao em tự tin nhất dự án này?
 
-Đáp án:
+### Câu trả lời tốt
 
-Nếu gọi API trong Activity:
-
-* Code khó bảo trì
-* Khó test
-* Activity chứa quá nhiều logic
-
-Ví dụ:
-
-```kotlin
-button.setOnClickListener {
-    api.getUser()
-}
-```
-
-Khi màn hình lớn lên:
-
-* API
-* Validation
-* Business logic
-
-đều nằm trong Activity.
-
-Đây là anti-pattern.
+> Đây là dự án em tham gia từ đầu.
+>
+> Em phụ trách nhiều module.
+>
+> Em hiểu rõ kiến trúc hệ thống.
 
 ---
 
-#### Tại sao Repository lại cần thiết?
+## Câu 0.3
 
-Đáp án:
+Nếu đánh giá Android của em theo thang điểm 10 thì em tự đánh giá bao nhiêu?
 
-Giả sử hôm nay dữ liệu lấy từ API.
+### Mục đích
 
-Ngày mai yêu cầu:
+Kiểm tra sự tự nhận thức.
 
-* Cache dữ liệu
-* Offline mode
+### Câu trả lời tốt
 
-Nếu không có Repository:
-
-Toàn bộ ViewModel phải sửa.
-
-Nếu có Repository:
-
-Chỉ cần sửa Repository.
-
-ViewModel không cần biết dữ liệu đến từ đâu.
-
----
-
-## Câu 2: Coroutine là gì?
-
-### Đáp án mong đợi
-
-Coroutine là cơ chế xử lý bất đồng bộ của Kotlin.
-
-Mục đích:
-
-* Tránh block UI Thread
-* Thực hiện tác vụ dài như API hoặc Database
-
-Ví dụ:
-
-```kotlin
-viewModelScope.launch {
-    val users = repository.getUsers()
-}
-```
-
-Trong lúc API chạy:
-
-* UI vẫn hoạt động
-* Người dùng vẫn bấm được
-
----
-
-### Tại sao không dùng Thread?
-
-Đáp án:
-
-Thread:
-
-* Tốn bộ nhớ
-* Quản lý khó
-* Dễ leak
-
-Coroutine:
-
-* Nhẹ hơn
-* Dễ đọc
-* Dễ cancel
-
----
-
-### launch và async khác nhau thế nào?
-
-launch:
-
-```kotlin
-viewModelScope.launch {
-}
-```
-
-Dùng khi không cần trả về kết quả.
-
-Trả về:
-
-```kotlin
-Job
-```
-
----
-
-async:
-
-```kotlin
-viewModelScope.async {
-}
-```
-
-Dùng khi cần nhận kết quả.
-
-Trả về:
-
-```kotlin
-Deferred<T>
-```
-
-Ví dụ:
-
-```kotlin
-val user = async {
-    api.getUser()
-}
-
-val result = user.await()
-```
-
----
-
-### Khi nào dùng async?
-
-Ví dụ:
-
-Màn hình Home cần:
-
-* User Info
-* Notification
-* Banner
-
-Có thể gọi song song:
-
-```kotlin
-val user = async { getUser() }
-val banner = async { getBanner() }
-val notify = async { getNotify() }
-```
-
-Giúp giảm thời gian chờ.
-
----
-
-## Câu 3: StateFlow là gì?
-
-### Đáp án mong đợi
-
-StateFlow là nơi lưu trữ trạng thái hiện tại của màn hình.
-
-Ví dụ:
-
-```kotlin
-data class HomeUiState(
-    val loading: Boolean = false,
-    val users: List<User> = emptyList()
-)
-```
-
-```kotlin
-private val _state =
-    MutableStateFlow(HomeUiState())
-```
-
-UI sẽ observe StateFlow.
-
-Khi state thay đổi:
-
-UI tự động cập nhật.
-
----
-
-### Tại sao StateFlow phải có giá trị khởi tạo?
-
-Đáp án:
-
-Vì StateFlow luôn đại diện cho trạng thái hiện tại.
-
-Nó không bao giờ được phép rỗng.
-
-Ví dụ:
-
-```kotlin
-MutableStateFlow(HomeUiState())
-```
-
-Luôn có state đầu tiên.
-
----
-
-### StateFlow và SharedFlow khác nhau thế nào?
-
-StateFlow:
-
-Dùng cho state.
-
-Ví dụ:
-
-* Loading
-* User Info
-* Product List
-
----
-
-SharedFlow:
-
-Dùng cho event.
-
-Ví dụ:
-
-* Toast
-* Snackbar
-* Navigate
-
----
-
-### Tại sao Snackbar không nên dùng StateFlow?
-
-Ví dụ:
-
-```kotlin
-state.message = "Login Success"
-```
-
-Khi xoay màn hình:
-
-State vẫn tồn tại.
-
-Snackbar có thể hiện lại lần nữa.
-
-Đây là bug.
-
-Snackbar là event.
-
-Nên dùng SharedFlow.
-
----
-
-## Câu 4: Crash trên Production
-
-### Khách hàng báo app crash.
-
-Em làm gì?
-
-### Đáp án mong đợi
-
-Bước 1:
-
-Xem Crashlytics.
-
-Thu thập:
-
-* Device
-* Android Version
-* Stacktrace
-* App Version
-
----
-
-Bước 2:
-
-Đọc Stacktrace.
-
-Ví dụ:
+Junior thường:
 
 ```text
-NullPointerException
-User.name
+6 - 7/10
 ```
 
-=> Có thể User bị null.
+và giải thích:
+
+> Em đã làm được nhiều dự án thực tế nhưng vẫn còn thiếu kinh nghiệm về architecture, performance và testing.
 
 ---
 
-Bước 3:
+### Dấu hiệu tốt
 
-Reproduce.
-
-Tìm cách tái hiện bug.
-
-Ví dụ:
-
-* Android 14
-* Login bằng tài khoản mới
-
----
-
-Bước 4:
-
-Fix.
-
----
-
-Bước 5:
-
-Regression Test.
-
-Kiểm tra các màn hình liên quan.
-
----
-
-### Nếu không reproduce được?
-
-Đáp án:
-
-* Thêm log
-* Review code
-* So sánh các device bị crash
-* Theo dõi Crashlytics tiếp
-
-Không được fix đoán mò.
-
----
-
-## Câu 5: Estimate bị trễ
-
-Estimate:
-
-2 ngày
-
-Ngày thứ 2 vẫn chưa xong.
-
-Em làm gì?
-
-### Đáp án mong đợi
-
-Không được im lặng.
-
-Cần:
-
-1. Báo leader ngay
-
-2. Nêu phần đã hoàn thành
-
-Ví dụ:
+Biết điểm mạnh:
 
 ```text
-UI: 100%
-API: 80%
-Testing: chưa làm
+Kotlin
+MVVM
+API
 ```
 
-3. Giải thích nguyên nhân
-
-Ví dụ:
+Biết điểm yếu:
 
 ```text
-API thay đổi
-Requirement chưa rõ
-```
-
-4. Đề xuất estimate mới
-
-Ví dụ:
-
-```text
-Cần thêm 1 ngày
+Unit Test
+Compose
+Performance
 ```
 
 ---
 
-### Tại sao đây là đáp án đúng?
+### Dấu hiệu chưa tốt
 
-Trong môi trường Nhật:
+> Em nghĩ em 9/10.
 
-Điều quan trọng nhất không phải là trễ.
+nhưng kinh nghiệm chỉ 1-2 năm.
 
-Điều quan trọng nhất là:
+---
 
-* Minh bạch
-* Báo sớm
-* Chủ động
+## Câu 0.4
 
-Nếu đợi tới deadline mới báo:
+Trong công việc hiện tại em thích nhất điều gì?
 
-Đó là dấu hiệu quản lý công việc kém.
+### Mục đích
+
+Đánh giá động lực.
+
+### Câu trả lời tốt
+
+Ví dụ:
+
+> Em thích giải quyết vấn đề.
+>
+> Em thích xây dựng feature từ đầu.
+>
+> Em thích tối ưu trải nghiệm người dùng.
+
+---
+
+## Câu 0.5
+
+Trong công việc hiện tại em thấy khó khăn nhất điều gì?
+
+### Mục đích
+
+Đánh giá sự trưởng thành.
+
+### Câu trả lời tốt
+
+Ví dụ:
+
+> Estimate chưa chính xác.
+>
+> Requirement thay đổi.
+>
+> Xử lý bug production.
+
+Quan trọng nhất:
+
+Ứng viên phải nói được cách cải thiện.
+
+---
+
+## Câu 0.6
+
+Tại sao em muốn chuyển công ty?
+
+### Câu trả lời tốt
+
+Ví dụ:
+
+> Em muốn tham gia dự án lớn hơn.
+>
+> Em muốn học thêm kiến trúc và quy trình phát triển sản phẩm.
+>
+> Em muốn có môi trường giúp em phát triển lâu dài.
+
+---
+
+### Dấu hiệu cần lưu ý
+
+Chỉ tập trung vào:
+
+```text
+Lương
+OT
+Không thích leader
+```
+
+mà không nói gì về định hướng nghề nghiệp.
+
+---
+
+## Câu 0.7
+
+Nếu được nhận vào team, sau 6 tháng em muốn đạt được điều gì?
+
+### Câu trả lời tốt
+
+Ví dụ:
+
+> Có thể tự xử lý task độc lập.
+>
+> Hiểu hệ thống.
+>
+> Có thể hỗ trợ các bạn fresher mới vào.
+
+---
+
+### Mục tiêu đánh giá
+
+Sau phần Opening Interview, interviewer nên trả lời được:
+
+* Ứng viên có giao tiếp ổn không?
+* Có ownership không?
+* Có hiểu CV của mình không?
+* Có định hướng phát triển không?
+* Có phù hợp văn hóa làm việc với khách Nhật không?
